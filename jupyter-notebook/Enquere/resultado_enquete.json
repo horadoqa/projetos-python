@@ -1,0 +1,18 @@
+{
+    "⭐ Extremamente importante – decisivo na escolha": {
+        "votos": 1,
+        "porcentagem": 25.0
+    },
+    "👍 Muito importante – faz grande diferença": {
+        "votos": 1,
+        "porcentagem": 25.0
+    },
+    "🤔 Importante, mas não essencial": {
+        "votos": 1,
+        "porcentagem": 25.0
+    },
+    "❌ Pouco ou nada importante": {
+        "votos": 1,
+        "porcentagem": 25.0
+    }
+}
