@@ -1,39 +1,68 @@
-# python
+# 🐍 Projetos em Python
 
-Todos os projetos feitos com python
+Repositório com diversos projetos desenvolvidos em Python.
 
-## Instalar o env
+Na pasta `jupyter-notebook` estão os projetos que podem ser executador diretamente no VSCode.
+
+---
+
+## ⚙️ Configuração do ambiente local
+
+### 1. Instalar suporte a ambientes virtuais
 
 ```bash
 sudo apt install python3.10-venv
 ```
 
-## Isolar o ambiente:
+### 2. Criar e ativar o ambiente virtual
 
 ```bash
-python3 -m venv ./venv && source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-## Salvar os requirements em um arquivo
+---
+
+## 📦 Gerenciamento de dependências
+
+### Salvar dependências no arquivo `requirements.txt`
 
 ```bash
-pip3 freeze > requirements.txt
+pip freeze > requirements.txt
 ```
 
-## Instalando os requeirementes a partir do arquivo
+### Instalar dependências a partir do arquivo
 
 ```bash
 pip install -r requirements.txt
 ```
-## Sair do ambiente
 
-```bash
-deactivate
-```
-## Atualizando todos os pacotes do requirements.txt da sua app Python
+---
+
+## 🔄 Atualização de dependências
+
+Para atualizar os pacotes listados no `requirements.txt`:
 
 ```bash
 pip install upgrade-requirements
 upgrade-requirements
 pip freeze > requirements.txt
 ```
+
+---
+
+## 🚪 Desativar o ambiente virtual
+
+```bash
+deactivate
+```
+
+---
+
+## 💡 Dicas
+
+* Sempre ative o ambiente virtual antes de instalar novas dependências.
+* Evite instalar pacotes globalmente para não causar conflitos entre projetos.
+* Mantenha o `requirements.txt` atualizado para garantir reprodutibilidade.
+
+---
