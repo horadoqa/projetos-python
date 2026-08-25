@@ -2,7 +2,7 @@ import { check, sleep } from 'k6';
 import http from 'k6/http';
 
 // Caminho do arquivo de URLs
-const urlFilePath = './base/rj.txt';
+const urlFilePath = './base/2026/rj.txt';
 
 // Ler as URLs do arquivo
 const urls = open(urlFilePath).split('\n').filter(url => url.trim() !== '');
@@ -23,9 +23,9 @@ export default function () {
         // Realizar a requisição GET
         const response = http.get(url);
 
-        console.log(url);
+        // console.log(url);
 
-        console.log('Response status code:', response.status);
+        // console.log('Response status code:', response.status);
 
         // Verificar se o status da resposta é 200 OK
         check(response, {

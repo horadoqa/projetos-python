@@ -9,7 +9,7 @@ def writeFile(arq, linha):
     arq.write(linha)
 
 # Abrindo arquivos com o contexto 'with' para garantir que sejam fechados corretamente
-with open('base/rj.txt', 'r') as arq, open('resultado/200.csv', 'w') as arq_200, open('resultado/404.csv', 'w') as arq_404:
+with open('base/2026/rj.txt', 'r') as arq, open('resultado/200.csv', 'w') as arq_200, open('resultado/404.csv', 'w') as arq_404:
 
     cont_200 = 0
     cont_404 = 0
