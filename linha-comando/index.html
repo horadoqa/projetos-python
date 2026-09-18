@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Python no terminal: 20 exemplos com python3 -c</title>
+
+    <meta
+        name="description"
+        content="Aprenda a executar Python diretamente pelo terminal usando python3 -c, com 20 exemplos práticos."
+    >
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --dark: #0f172a;
+            --text: #334155;
+            --muted: #64748b;
+            --background: #f8fafc;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --code-bg: #0b1220;
+            --code-text: #e2e8f0;
+            --accent: #facc15;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            color: var(--text);
+            background: var(--background);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+
+        header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a 0%,
+                    #172554 50%,
+                    #1d4ed8 100%
+                );
+            color: white;
+            padding: 80px 20px;
+        }
+
+        .hero {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 850px;
+            font-size: clamp(2.3rem, 6vw, 4.5rem);
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            max-width: 720px;
+            margin-top: 24px;
+            color: #cbd5e1;
+            font-size: 1.2rem;
+        }
+
+        .terminal {
+            margin-top: 35px;
+            max-width: 720px;
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 7px;
+            padding: 12px 15px;
+            background: #111827;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ef4444;
+        }
+
+        .yellow {
+            background: #facc15;
+        }
+
+        .green {
+            background: #22c55e;
+        }
+
+        .terminal pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            color: #86efac;
+        }
+
+        /* LAYOUT */
+
+        .layout {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 760px);
+            gap: 50px;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+            align-items: start;
+        }
+
+        /* SIDEBAR */
+
+        .toc {
+            position: sticky;
+            top: 25px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            color: var(--dark);
+        }
+
+        .toc a {
+            display: block;
+            padding: 7px 0;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+        }
+
+        /* ARTICLE */
+
+        article {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: clamp(25px, 5vw, 55px);
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.05);
+        }
+
+        article h2 {
+            margin-top: 55px;
+            color: var(--dark);
+            font-size: 1.8rem;
+            line-height: 1.2;
+        }
+
+        article h2:first-child {
+            margin-top: 0;
+        }
+
+        article h3 {
+            margin-top: 35px;
+            color: var(--dark);
+        }
+
+        article p {
+            margin: 16px 0;
+        }
+
+        article strong {
+            color: var(--dark);
+        }
+
+        /* CODE */
+
+        .code-wrapper {
+            margin: 18px 0 30px;
+            background: var(--code-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+
+        .code-title {
+            padding: 9px 14px;
+            color: #94a3b8;
+            background: #111827;
+            font-size: 0.78rem;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-wrapper code {
+            color: var(--code-text);
+        }
+
+        /* LIST */
+
+        .features {
+            padding-left: 25px;
+        }
+
+        .features li {
+            margin: 8px 0;
+        }
+
+        /* HIGHLIGHT */
+
+        .highlight {
+            margin: 30px 0;
+            padding: 22px 25px;
+            border-left: 4px solid var(--primary);
+            background: #eff6ff;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .highlight strong {
+            color: var(--primary-dark);
+        }
+
+        /* SOCIAL */
+
+        .social-card {
+            margin-top: 45px;
+            padding: 30px;
+            background: linear-gradient(
+                135deg,
+                #eff6ff,
+                #f8fafc
+            );
+            border: 1px solid #bfdbfe;
+            border-radius: 14px;
+        }
+
+        .social-card h3 {
+            margin-top: 0;
+        }
+
+        .hashtags {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--dark);
+            color: #94a3b8;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+            .layout {
+                display: block;
+                margin-top: 30px;
+            }
+
+            .toc {
+                position: static;
+                margin-bottom: 25px;
+            }
+
+            header {
+                padding: 55px 20px;
+            }
+
+            article {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="hero">
+
+        <span class="badge">🐍 Python • Linux • Automação</span>
+
+        <h1>
+            Python no terminal:
+            20 exemplos com
+            <code>python3 -c</code>
+        </h1>
+
+        <p class="subtitle">
+            Aprenda a executar código Python diretamente pelo terminal,
+            sem precisar criar um arquivo .py.
+        </p>
+
+        <div class="terminal">
+
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <pre><code>$ python3 -c "print('Hello World!')"</code></pre>
+
+        </div>
+
+    </div>
+</header>
+
+
+<div class="layout">
+
+    <aside class="toc">
+
+        <h3>Conteúdo</h3>
+
+        <a href="#basico">Básico</a>
+        <a href="#listas">Listas e loops</a>
+        <a href="#arquivos">Arquivos</a>
+        <a href="#json">JSON</a>
+        <a href="#argumentos">Argumentos</a>
+        <a href="#sistema">Sistema operacional</a>
+        <a href="#por-que">Por que usar?</a>
+        <a href="#dica">Dica importante</a>
+
+    </aside>
+
+
+    <main>
+
+        <article>
+
+            <section id="basico">
+
+                <h2>🐍 O que é o python3 -c?</h2>
+
+                <p>
+                    Você sabia que pode executar código Python diretamente
+                    pelo terminal, sem precisar criar um arquivo
+                    <code>.py</code>?
+                </p>
+
+                <p>
+                    O parâmetro <code>-c</code> permite passar um trecho
+                    de código Python diretamente para o interpretador.
+                </p>
+
+                <div class="code-wrapper">
+
+                    <div class="code-title">
+                        Terminal
+                    </div>
+
+                    <pre><code>python3 -c "print('Hello World!')"</code></pre>
+
+                </div>
+
+            </section>
+
+
+            <section id="exemplos">
+
+                <h2>20 exemplos práticos</h2>
+
+
+                <h3>1. Variáveis</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "nome='Maria'; idade=25; print(nome, idade)"</code></pre>
+                </div>
+
+
+                <h3>2. Operações matemáticas</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "print(10 + 5); print(10 * 5); print(10 / 5)"</code></pre>
+                </div>
+
+
+                <h3>3. F-strings</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "nome='João'; idade=30; print(f'{nome} tem {idade} anos')"</code></pre>
+                </div>
+
+
+                <h3>4. Condicional</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "idade=20; print('Maior de idade' if idade >= 18 else 'Menor de idade')"</code></pre>
+                </div>
+
+
+                <h3>5. Trabalhando com listas</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "frutas=['maçã','banana','laranja']; print(frutas)"</code></pre>
+                </div>
+
+
+                <h3>6. Loop for</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "for fruta in ['maçã','banana','laranja']: print(fruta)"</code></pre>
+                </div>
+
+
+                <h3>7. Gerando números</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "for i in range(1,11): print(i)"</code></pre>
+                </div>
+
+
+                <h3>8. Filtrando números pares</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "print([i for i in range(1,21) if i % 2 == 0])"</code></pre>
+                </div>
+
+
+                <h3>9. Somando valores</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "print(sum([10,20,30,40]))"</code></pre>
+                </div>
+
+
+                <h3>10. Lendo um arquivo</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "print(open('arquivo.txt').read())"</code></pre>
+                </div>
+
+
+                <h3>11. Contando linhas</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "print(len(open('arquivo.txt').readlines()))"</code></pre>
+                </div>
+
+
+                <h3>12. Criando um arquivo</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "open('saida.txt','w').write('Olá do Python!\n')"</code></pre>
+                </div>
+
+
+                <h3>13. Procurando uma palavra</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "texto=open('arquivo.txt').read(); print('Python' in texto)"</code></pre>
+                </div>
+
+
+                <h3 id="json">14. Trabalhando com JSON</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import json; dados={'nome':'Carlos','idade':35}; print(json.dumps(dados, indent=2))"</code></pre>
+                </div>
+
+
+                <h3>15. Lendo um JSON</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import json; d=json.load(open('dados.json')); print(d['nome'])"</code></pre>
+                </div>
+
+
+                <h3 id="argumentos">16. Recebendo argumentos</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import sys; print(f'Olá, {sys.argv[1]}!')" Maria</code></pre>
+                </div>
+
+                <p>Resultado:</p>
+
+                <div class="code-wrapper">
+                    <pre><code>Olá, Maria!</code></pre>
+                </div>
+
+
+                <h3 id="sistema">17. Listando arquivos</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import os; print('\n'.join(os.listdir('.')))"</code></pre>
+                </div>
+
+
+                <h3>18. Executando comandos do sistema</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import subprocess; subprocess.run(['ls','-lah'])"</code></pre>
+                </div>
+
+                <p>
+                    Aqui, Python pode atuar como uma ponte para executar
+                    comandos do sistema operacional.
+                </p>
+
+
+                <h3>19. Capturando a saída de um comando</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import subprocess; r=subprocess.run(['uname','-a'], capture_output=True, text=True); print(r.stdout)"</code></pre>
+                </div>
+
+
+                <h3>20. Gerando um hash SHA-256</h3>
+
+                <div class="code-wrapper">
+                    <pre><code>python3 -c "import hashlib; print(hashlib.sha256(b'Hello World').hexdigest())"</code></pre>
+                </div>
+
+            </section>
+
+
+            <section id="por-que">
+
+                <h2>🚀 Por que usar python3 -c?</h2>
+
+                <p>
+                    O <code>python3 -c</code> não é uma substituição
+                    para scripts Python tradicionais.
+                </p>
+
+                <p>
+                    A ideia é resolver tarefas pequenas de forma rápida.
+                </p>
+
+                <div class="highlight">
+
+                    <strong>
+                        Pense nele como uma ferramenta rápida para
+                        pequenas automações diretamente no terminal.
+                    </strong>
+
+                </div>
+
+                <p>
+                    Ele pode ser útil para:
+                </p>
+
+                <ul class="features">
+                    <li>Verificar rapidamente uma informação</li>
+                    <li>Manipular arquivos</li>
+                    <li>Processar JSON</li>
+                    <li>Fazer conversões</li>
+                    <li>Testar expressões Python</li>
+                    <li>Executar operações matemáticas</li>
+                    <li>Automatizar tarefas simples</li>
+                    <li>Integrar Python com comandos do shell</li>
+                </ul>
+
+            </section>
+
+
+            <section id="dica">
+
+                <h2>💡 Uma dica importante</h2>
+
+                <p>
+                    Quando o comando começa a ficar muito grande ou
+                    complexo, provavelmente é hora de criar um arquivo
+                    <code>.py</code>.
+                </p>
+
+                <p>
+                    O <code>python3 -c</code> é excelente para comandos
+                    rápidos. Para lógica complexa, reutilização,
+                    testes e manutenção, um script tradicional tende
+                    a ser muito mais legível.
+                </p>
+
+                <div class="highlight">
+
+                    <strong>
+                        Comando pequeno → python3 -c
+                    </strong>
+
+                    <br>
+
+                    <strong>
+                        Código complexo → arquivo .py
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <section>
+
+                <h2>📌 Em resumo</h2>
+
+                <p>
+                    O <code>python3 -c</code> transforma o Python em uma
+                    ferramenta extremamente prática para o terminal.
+                </p>
+
+                <p>
+                    É uma pequena funcionalidade, mas pode ser muito útil
+                    para quem trabalha com terminal diariamente.
+                </p>
+
+                <p>
+                    🐍 Python · 🐧 Linux · ⚙️ DevOps · ☁️ Cloud ·
+                    🔧 Automação · 💻 Desenvolvimento
+                </p>
+
+            </section>
+
+
+            <div class="social-card">
+
+                <h3>💬 Para publicar no LinkedIn</h3>
+
+                <p>
+                    Qual desses exemplos você mais usaria no seu
+                    dia a dia?
+                </p>
+
+                <p class="hashtags">
+                    #Python #Linux #DevOps #Automação
+                    #Programação #Cloud #Desenvolvimento
+                    #Terminal #Tecnologia
+                </p>
+
+            </div>
+
+        </article>
+
+    </main>
+
+</div>
+
+
+<footer>
+
+    <p>
+        Python no terminal • Guia prático com python3 -c
+    </p>
+
+    <p>
+        Desenvolvido como material educacional.
+    </p>
+
+</footer>
+
+</body>
+</html>
