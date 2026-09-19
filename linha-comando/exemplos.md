@@ -399,7 +399,7 @@ python3 -c "for fruta in ['maçã','banana','laranja']: print(fruta)"
  ### 7️⃣ Gerando números
 
 ```
-python3 -c "for i in range(1,11): print(i)"
+python3 -c "for i in range(1,6): print(i)"
 ```
 
  ### 8️⃣ Filtrando números pares
